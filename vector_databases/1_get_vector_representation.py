@@ -19,12 +19,22 @@ from scipy.stats import norm
 # Load data – training and test
 (x_tr, y_tr), (x_te, y_te) = mnist.load_data()
 
+"""
+Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz
+"""
+
+
 #Normalize and Reshape images (flatten)
 x_tr, x_te = x_tr.astype('float32')/255., x_te.astype('float32')/255.
 x_tr_flat, x_te_flat = x_tr.reshape(x_tr.shape[0], -1), x_te.reshape(x_te.shape[0], -1)
 
 print(x_tr.shape, x_te.shape)
 print(x_tr_flat.shape, x_te_flat.shape)
+
+"""
+(60000, 28, 28) (10000, 28, 28)
+(60000, 784) (10000, 784)
+"""
 
 # Neural Network Parameters
 batch_size, n_epoch = 100, 50
