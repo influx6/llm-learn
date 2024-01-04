@@ -5,7 +5,61 @@
 !rm -rf ~/.local/share/weaviate
 
 ## Recreate the example
+##
+"""
 With the same data as in the previous lesson
+
+So, dense search uses vector embeddings
+representation of the data to perform the search. So, it
+relies on the meaning of the data in order
+to perform that query. So for example, if we look for baby dogs
+maybe we can get back information and content
+on puppies. However, this has its limitations. For example,
+if the model that we are using was trained on
+a completely different domain, the accuracy
+of our queries would be rather poor. It's very much
+like if you went to a doctor and asked them how to
+fix a car engine. Well, the doctor probably wouldn't have a good
+answer for you.
+Another example is when we're dealing with stuff like serial numbers,
+like seemingly random strings of text. And
+in this case, also, there isn't a lot of meaning into codes like BB43300, right?
+Like if you ask the semantic engine for finding content
+with that, you will get high quality results back. This is
+why we need to actually go into a different
+direction for situations like this and try to go
+for keyword search, also known as sparse search. Sparse search
+is a way that allows you to utilize
+the keyword matching across all of your content. One example
+could be, hey, we could use bag of words. And the
+idea behind bag of words is like for every passage
+of text that you have in your data, what you
+can do is grab all the words and then keep adding and
+expanding to your table of available words, just like
+you see below.
+So in this case, we can see that like maybe extremely,
+and cute appeared once in this sentence,
+and then word eat appears twice. So, that's how we can construct
+that for sparse embedding for this object. And
+as I mentioned, this is called sparse embedding
+because if you have across all of your data, are
+so many words, actually, the vector that will represent
+that data will have a lot of slots where you could count
+each individual word. But in reality, you
+would be catching maybe 1% of available words. So, you'd have
+a lot of zeros in your data. A good example of a keyword-based algorithm is
+Best Matching 25, also known as BM25. And it actually
+performs really well when it comes to searching
+across many, many keywords. And the idea behind it is that
+it counts the number of words within the phrase that you are
+passing in and then those that appear more
+often are weighted as like less important when
+the match occurs but words that are rare
+if we match on that the score is a lot higher. And like you
+see this example here the sentence that we
+provided at the bottom will result in quite
+a lot of zeros that's why we call it sparse vector search.
+"""
 
 import requests
 import json
