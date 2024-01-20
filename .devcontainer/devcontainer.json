@@ -11,11 +11,28 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"usernamehw.errorlens",
-				"ms-azuretools.vscode-docker",
 				"ms-python.python",
-				"ms-python.vscode-pylance"
-			]
+				"usernamehw.errorlens",
+				"tal7aouy.theme",
+				"ms-azuretools.vscode-docker",
+				"samuelcolvin.jinjahtml",
+				"qufiwefefwoyn.inline-sql-syntax",
+				"vadimcn.vscode-lldb",
+				"tamasfe.even-better-toml",
+				"Chouzz.vscode-better-align",
+				"formulahendry.code-runner",
+				"ms-vscode-remote.remote-containers"
+			],
+			"settings": {
+				"python.testing.pytestArgs": [
+                    "."
+                ],
+                "python.testing.unittestEnabled": false,
+                "python.testing.pytestEnabled": true,
+                "python.formatting.provider": "black",
+                "python.linting.mypyEnabled": true,
+                "python.linting.enabled": true
+			}
 		}
 	},
 
