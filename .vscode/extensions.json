@@ -1,0 +1,30 @@
+{
+    "recommendations": [
+        // General extensions
+        "tal7aouy.theme",
+        "vscodevim.vim",
+        "vadimcn.vscode-lldb",
+        "usernamehw.errorlens",
+        "ms-azuretools.vscode-docker",
+        "formulahendry.code-runner",
+        "ms-python.black-formatter",
+        "ms-vscode-remote.remote-containers",
+        "bradgashler.htmltagwrap",
+        "vscode-icons-team.vscode-icons",
+        "CoenraadS.disableligatures",
+        "octref.vetur",
+        "formulahendry.auto-close-tag",
+        "skellock.just", // flexible command runner in rust
+        // Nice to have cause I will still edit such files
+        "mrmlnc.vscode-duplicate",
+        "qufiwefefwoyn.inline-sql-syntax",
+        "tamasfe.even-better-toml",
+        "Chouzz.vscode-better-align",
+        "dbaeumer.vscode-eslint",
+        // Python specifics extensions
+        "ms-python.python",
+        "samuelcolvin.jinjahtml",
+        "matangover.mypy",
+        "charliermarsh.ruff"
+    ],
+}

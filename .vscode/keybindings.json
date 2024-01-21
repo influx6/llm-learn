@@ -1,0 +1,85 @@
+[
+    // {
+    //     "key": "tab",
+    //     "command": "type",
+    //     "args": {
+    //         "text": "\t"
+    //     },
+    //     "when": "vim.active && vim.mode == 'Insert' && editorTextFocus"
+    // },
+    {
+        "key": "cmd+alt+r",
+        "command": "workbench.action.reloadWindow",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "tab t",
+        "command": "workbench.action.terminal.toggleTerminal",
+        "when": "vim.active && vim.mode != 'Insert'"
+    },
+    {
+        "key": "tab t",
+        "command": "workbench.action.terminal.focus",
+        // "when": "!terminalFocus"
+        "when": "vim.active && vim.mode != 'Insert' && !terminalFocus"
+    },
+    {
+        "key": "tab right",
+        "command": "workbench.action.terminal.focusNext",
+        "when": "vim.active && vim.mode != 'Insert' && terminalFocus"
+    },
+    {
+        "key": "tab left",
+        "command": "workbench.action.terminal.focusPrevious",
+        // "when": "terminalFocus"
+        "when": "vim.active && vim.mode != 'Insert' && terminalFocus"
+    },
+    {
+        "key": "tab z",
+        "command": "workbench.action.toggleZenMode",
+        "when": "vim.active && vim.mode != 'Insert'"
+    },
+    {
+        "key": "tab g",
+        "command": "workbench.view.scm",
+        "when": "vim.active && vim.mode != 'Insert'"
+    },
+    {
+        "key": "tab e",
+        "command": "workbench.view.explorer",
+        "when": "vim.active && vim.mode != 'Insert'"
+    },
+    {
+        "key": "tab d",
+        "command": "workbench.view.debug",
+        "when": "vim.active && vim.mode != 'Insert'"
+    },
+    {
+        "key": "tab x",
+        "command": "workbench.extensions.action.showInstalledExtensions",
+        "when": "vim.active && vim.mode != 'Insert'"
+    },
+    {
+        "key": "tab s",
+        "command": "workbench.action.focusActiveEditorGroup",
+        "when": "vim.active && vim.mode != 'Insert'"
+    },
+    {
+        "key": "tab tab",
+        "command": "workbench.action.showCommands",
+        "when": "vim.active && vim.mode != 'Insert'"
+    },
+    {
+        "key": "shift+cmd+p",
+        "command": "-workbench.action.showCommands"
+    },
+    {
+        "key": "tab f",
+        "command": "workbench.action.quickOpen",
+        "when": "vim.active && vim.mode != 'Insert'"
+    },
+    {
+        "key": "cmd+p",
+        "command": "-workbench.action.quickOpen"
+    }
+]
