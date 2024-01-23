@@ -1,6 +1,7 @@
 FROM mcr.microsoft.com/devcontainers/python:1-3.10-bookworm
 
 COPY ./.vscode/git.alias /home/vscode/.git.alias
+COPY ./.vscode/keybindings.json /home/vscode/.vscode-server/data/Machine/User/keybindings.json
 COPY ./.vscode/keybindings.json /home/vscode/.vscode-server/data/Machine/keybindings.json
 COPY ./.vscode/keybindings.json /home/vscode/.vscode-server/data/keybindings.json
 COPY ./.vscode/keybindings.json /home/vscode/.vscode-server/data/User/keybindings.json
