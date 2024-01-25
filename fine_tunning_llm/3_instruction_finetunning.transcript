@@ -1,0 +1,190 @@
+In this lesson you'll learn about instruction fine-tuning, a
+variant of fine-tuning that enabled GPT-3 to turn into
+chat GPT and give it its chatting powers.
+Okay, let's start giving chatting powers to all our models.
+Okay, so let's dive into what instruction fine-tuning is.
+
+Instruction fine-tuning is a type of fine-tuning. There are
+all sorts of other tasks that you can do like reasoning, routing,
+copilot, which is writing code, chat, different agents,
+but specifically instruction fine tuning, which you
+also may have heard as instruction tune or instruction
+following LLMs, teaches the model to follow instructions
+and behave more like a chatbot.
+And this is a better user interface to
+interact with the model as we've seen with chat GPT.
+This is the method that turned. GPT-3 into chat GPT, which
+dramatically increased AI adoption from just a few researchers
+like myself to millions and millions of people.
+So for the data set for instruction following,
+you can use a lot that already exists
+readily available either online or specific to your company,
+and that might be FAQs, customer support conversations,
+or Slack messages.
+So it's really this dialogue dataset or just
+instruction response datasets.
+Of course, if you don't have data, no problem.
+You can also convert your data into something that's
+more of a question-answer format or instruction following
+format by using a prompt template. So here
+you can see, you know, a README might be able to come be converted into
+a question-answer pair.
+You can also use another LLM to do this for you.
+There's a technique called Alpaca from Stanford that uses
+chat GPT to do this.
+And of course, you can use a pipeline
+of different open source models to do this as well.
+Cool.
+So one of the coolest things about fine tuning,
+I think, is that it teaches this new behavior to the model.
+And while, you know, you might have fine
+tuning data on what's the capital of France, Paris, because
+these are easy question answer pairs that you can
+get.
+You can also generalize this idea of question
+answering to data you might not have given
+the model for your fine-tuning data set, but
+that the model had already learned in its pre-existing pre-training
+step. And so that might be code.
+And this is actually findings from the chat GPT paper where the
+model can now answer questions about
+code even though they didn't have question answer pairs about that
+for their instruction fine-tuning.
+And that's because it's really expensive to get programmers
+to go, you know, label data sets where they ask questions
+about code and write the code for it.
+So an overview of the different steps of fine-tuning
+are data prep, training, and evaluation.
+Of course, after you evaluate the model,
+you need to prep the data again to improve it.
+It's a very iterative process to improve the model.
+And specifically for instruction fine-tuning and other different types of fine-tuning,
+data prep is really where you have differences.
+This is really where you change your data,
+you tailor your data to the specific type of fine tuning,
+the specific task of fine tuning that you're doing.
+And training and evaluation is very similar.
+So now let's dive into the lab where you'll get
+a peek at the alpaca dataset for instruction tuning.
+
+You'll also get to compare models again that have been
+instruction tuned versus haven't been instruction tuned, and you'll get to
+see models of varying sizes here.
+So first importing a few libraries, the first one that
+is important is again this load data set
+function from the data sets library and let's load up this instruction
+tune data set and this is specifying the
+alpaca data set and again we're streaming this because it's actually a
+hefty fine-tuning data set not as big as the pile
+of course.
+I'm going to load that up and just like before with the pile, you're
+going to take a look at a few examples.
+All right, so unlike the pile, it's not just text and that's it.
+Here it's a little bit more structured, but
+it's not as, you know, clear-cut as just question-answer pairs.
+And what's really, really cool about, you know, this
+is that the authors of the alpaca paper, they
+actually had two prompt templates because
+they wanted the model to be able to work with two different
+types of prompts and two different types of tasks
+essentially and so one is you know an instruction
+following one where there is an extra set of
+inputs for example it the instruction might be add
+two numbers and the inputs might be first number is three the
+second number is four and then there's prompt templates without input
+which you can see in these examples sometimes it's not relevant
+to have an input so it doesn't have that so these are the prompt
+templates that are being used and so again
+very similar to before you'll just hydrate those prompts
+and run them across the whole data set.
+
+And let's just print out one pair to see what that looks like.
+Cool, so that's input output here and you know how it's hydrated
+into the prompt.
+So it ends with response and then it
+outputs this response here.
+Cool, and just like before, you can write it to a JSON lines file.
+
+You can upload it to HuggingFace hub if you want.
+We've actually loaded it up at Lamini slash Alpaca so that it's stable,
+you can go look at it there and you can go use it.
+Okay, great.
+So now that you have seen what that instruction following data set
+looks like, I think the next thing to do is
+just remind you again on this tell me how to train my
+dog to sit prompt on different models.
+So the first one is going to be this llama 2 model
+that is again not instruction tuned.
+We're gonna run that.
+Tell me how to train my dog to sit.
+Okay, it starts with that period again and just
+says this so remember that before and then now we're
+gonna compare this to again the instruction tuned
+model right here okay so much better it's actually
+producing different steps and then finally I just
+want to share chatGPT again just so you
+can have this comparison right here great okay
+so that.
+That is a much larger set of models, ChatGPT is quite large
+compared to the Llama2 models.
+Those are actually 7 billion parameter models,
+ChatGPT is rumored to be around 70 billion,
+so very large models.
+You're also going to explore some smaller models.
+So one is that 70 million parameter model.
+And here I'm loading up these models.
+This is not super important yet, you'll
+explore this a bit more later, but I'm going to load up two
+different things to process the data and then
+run the model.
+And you can see here, the tag that we have here is a
+"EleutherAI/Pythia/70m".
+This is a 70 million parameter model that
+has not been instruction tuned.
+I'm going to paste some code here. It's a function to run inference, or basically
+run the model on text.
+We will go through these different sections of
+what exactly is going on in this function
+throughout the next few labs.
+Cool.
+So this model hasn't been fine-tuned. It doesn't know anything specific about a
+company, but we can load up this, company dataset again
+from before.
+So we're going to give this model a question from this dataset, probably
+just, you know, the first sample from the test set, for
+example.
+And so we can run this here. The question is, can Lamini
+generate technical documentation or user manuals for software projects?
+And the actual answer is yes, Lamini can generate technical
+documentation and user manuals for software projects.
+And it keeps going.
+But the model's answer is, I have a question about the following.
+How do I get the correct documentation to work?
+A, I think you need to use the following code,
+et cetera.
+So it's quite off.
+Of course, it's learned English, and it got the word
+documentation in there.
+So it kind of understands maybe that we're in a question-answer setting, because it
+has.
+A there for answer.
+But it's clearly quite off.
+And so it doesn't quite understand this data set
+in terms of the knowledge, and also doesn't understand
+the behavior that we're expecting from it. So it doesn't understand that it's
+supposed to answer this question.
+Ok, so now compare this to a model that we've
+now fine-tuned for you, but that you're actually about
+to fine-tune for instruction following.
+And so that's loading up this model.
+And then we can run the same question through this
+model and see how it does.
+And it says, yes, lamani can generate technical documentation or
+user manuals for software projects, et cetera, and so this is
+just far more accurate than the one before and it's
+following that right behavior that we would expect.
+Okay great so now that you've seen what an instruction
+following model does exactly the next step is
+to go through what you saw a peak of which is that
+tokenizer how to prep our data so that
+it is available to the model for training.
