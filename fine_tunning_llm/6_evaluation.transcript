@@ -1,0 +1,232 @@
+Now that you've finished training your model, the
+next step is to evaluate it, see how it's doing.
+This is a really important step because AI
+is all about iteration.
+This helps you improve your model over time.
+Okay, let's get to it.
+Evaluating generative models is notoriously very, very difficult.
+You don't have clear metrics and the performance of these
+models is just improving so much over time
+that metrics actually have trouble keeping up.
+So as a result, human evaluation is often the most reliable way of
+doing so, so that's actually having experts who
+understand the domain actually assess the outputs.
+A good test data set is extremely important
+to making this actually a good use of that person's time, and
+that means it's a high quality data set, it's accurate, so
+you've gone through it to make sure that it
+is accurate.
+It's generalized so it actually covers a lot of
+the different test cases you want to make
+sure the model covers and of course it can't be
+seen in the training data.
+Another popular way that is emerging is ELO comparison
+so that's looking almost like a A-B test between multiple models or tournament across
+multiple models.
+ELO rankings are used in chess specifically and so this is one
+way of also being able to understand and which
+models are performing well or not.
+So one really common open LLM benchmark is a suite of different
+evaluation methods.
+So it's actually taking a bunch of different possible evaluation methods
+and averaging them all together to rank models.
+And this one is developed by EleutherAI, and it's a set of different
+benchmarks put together.
+So one is ARC. It's a set of grade school questions.
+HellaSwag is a test of common sense.
+MMLU covers a lot of elementary school subjects,
+and TruthfulQA measures the model's ability to reproduce
+falsehoods that you can commonly find online.
+And so these are a set of benchmarks
+that were developed by researchers over time and
+now have been used in this common evaluation suite.
+And you can see here this is the latest ranking as of this recording,
+but I'm sure this changes all the time.
+Llama 2 is doing well.
+This is actually not necessarily sorted by the average here.
+Llama 2 is doing well. There's recently a free willy
+model that was fine-tuned on top of the Llama 2
+model using what's known as the Orca method, which is why
+it's called free willy.
+Not going to go into that too much.
+There are a lot of animals going on right here,
+but feel free to go check it out yourself.
+Okay, so one other framework for analyzing
+and evaluating your model is called error analysis.
+And what this is is categorizing errors so that you understand the
+types of errors that are very common, and going after the
+very common errors and the very catastrophic errors first.
+
+This is really cool because error analysis usually requires
+you to first train your model first beforehand.
+But of course, for fine-tuning, you already have a base model that's been
+pre-trained. So you can already perform error analysis before you
+even fine-tune the model.
+This helps you understand and characterize how the
+base model is doing, so that you know what
+kind of data will give it the biggest lift for fine-tuning.
+And so there are a lot of different categories.
+I'll go through a few common ones that you can take a look at.
+So one is just misspellings. This is very straightforward,
+very simple.
+So here it says, go get your liver or lover checked,
+and it's misspelled.
+And so just fixing that example in your
+data set is important to just spell it correctly.
+Length is a very common one that I hear about chat GPT
+or generative models in general.
+They really are very verbose.
+And so one example is just making sure your data set is
+less verbose to make it so that it actually is answering the
+question very succinctly. And you've already seen that in the
+training notebook where we're able to do a bit of that in the models, less
+verbose and less repetitive.
+And speaking of repetitive, these models do tend
+to be very repetitive.
+And so one way to do that is to fix it with either stop tokens
+more explicitly, those prompt templates you saw,
+but of course, also making sure your
+dataset includes examples that don't have as much repetition
+and do have diversity.
+Cool, so now on to a lab where you get to run the model across a test
+dataset and then be able to run a few different metrics,
+but largely inspect it manually and also run
+on one of those LLM benchmarks that you saw, Arc.
+Okay, so this actually can be done in just a line of code,
+which is running your model on your entire test data
+set in a batched way that's very efficient on GPUs. And
+so I just wanted to share that here, which is you can load
+up your model here and instantiate it and
+then have it just run on a list of your entire test data set. And
+then it's automatically batched on GPUs
+really quickly.
+Now we're really largely running on CPUs here.
+So for this lab, you'll get to actually just run
+it on a few of the test data points.
+And then of course you can do more on your own as well.
+Okay, great.
+So I think the first thing is to load up
+the test data set that we've been working with.
+And then let's take a look at what one of those data points looks like.
+So I'm just going to print question answer pair.
+All right, so this is one that we've been looking at.
+And then we want to load up the model to
+run it over this entire data set.
+So this is the same as before.
+I'm going to pull out the actual fine-tuned model
+from HuggingFace.
+Okay so now we've loaded up our model and I'm gonna
+load up one really basic evaluation metric just
+for you to get a sense of this generative task and it's gonna be
+whether it's an exact match between two strings of
+course stripping a little bit of white space
+but just getting a sense of whether it
+can be an exact match.
+This is really hard for those writing tasks because it's
+generating content there are actually a lot of different
+possible to write answers, so it's not
+a super valid evaluation metric.
+For reading, quote unquote, tasks, those reading tasks,
+you might be extracting topics out. You might be
+extracting some information out. So maybe in those cases where it's
+closer to classification, this might make more sense.
+But I just want to run this through.
+You can run different evaluation metrics through as well.
+An important thing when you're running a model in evaluation
+mode is to do "model.eval" to make sure things like dropout
+is disabled.
+And then just like in previous labs, you can run this
+inference function to be able to generate output.
+So let's run that first test question again.
+Again, you get that output and look at the actual answer,
+compare it to that, and it's similar, but it's not quite there.
+So of course, when you run exact match, it's
+not perfect.
+And that's not to say there aren't other ways of measuring these models.
+This is a very very simple way.
+Sometimes people also will take you know these
+outputs and put it into another LLM to
+ask it and grade it to see how well you know how
+close is it really.
+You can also use embedding so you can embed the actual answer
+and actually embed the generated answer and see how
+close they are in distance.
+So there are a lot of different approaches
+that you can take.
+Cool so now to run this across your entire data set,
+this is what that might look like.
+So let's just actually run it over 10 since it takes quite
+a bit of time.
+You're going to iterate over that data set, pull
+out the question and answers.
+Here I'm also trying to take the predicted answer and
+actually append it with the other answers so
+that you can inspect it manually later, and
+then take a look at the number of exact matches, and
+it's just evaluating here.
+So the number of exact matches is zero, and that's not actually super surprising
+since this is a very generative task.
+And typically for these tasks, you know, there again are a lot of
+different ways of approaching evaluation,
+but at the end of the day, what's been found to be
+significantly more effective by a large margin is
+using manual inspection on a very curated test set.
+And so this is what that data frame looks like.
+So now you can go inspect it and see, okay, for every predicted answer,
+what was the target and how close was it really?
+Okay, cool. So that's only on a subset of the data.
+We also did evaluate it on all of the data here that you can go load
+from HuggingFace and be able to basically see
+and evaluate manually all the data.
+And last but not least, you'll get to see running Arc, which
+is a benchmark.
+So if you're curious about academic benchmarks, this
+was one that you just explored across that test suite of different
+LLM benchmarks. And this ARC benchmark, as
+a reminder, is one of those four that EleutherAI came up
+with and put together, and these are from academic papers.
+
+And for this one, if you inspect the data set, you'll
+find science questions that may or may not be related to your
+task.
+And these evaluation metrics, especially here, are just very good
+for academic contests or understanding, you know,
+general model abilities sometimes around these,
+in this case, basic grade school questions.
+But I actually really recommend, you know, even even as
+you run these to not necessarily be too caught up on the
+performance on these benchmarks, even though this is how
+people are ranking models now, and that's because they don't correlate
+with your use case.
+They are not necessarily related to what your company cares about,
+what you actually care about for your end
+use case for that fine-tuned model.
+And as you can probably see, the fine-tuned models are able to
+basically get tailored to a ton of different
+tasks which require a ton of different ways
+of evaluating them.
+Okay, so the ARC benchmark just finished running and
+the score is right here, 0.31, and actually that is lower
+than the base model score in the paper, which
+is 0.36, which is crazy because you saw it improve
+so much on this.
+But it's because it improves so much on this company
+dataset related to this company, related
+to question answering for it, and not grade school science.
+So that's what ARC is really measuring.
+Of course, if you fine-tune a model on general tasks, so
+if you fine-tune it on alpaca, for example, you should see a little bit
+of a bump in that performance for this
+specific benchmark. And if you use a larger model you'll also see
+a likely bump as well because it's learned much more.
+
+And that's basically it. So as you can see this.
+ARC benchmark probably only matters if you're
+looking at general models and comparing general models.
+Maybe that's finding a base model for you to use but not
+for your actual fine-tuning task. It's not very
+useful unless you're fine-tuning the model to do grade school science questions.
+
+All right and that's a for the notebooks.
+In the last lesson you'll learn some practical tips for fine-tuning and
+then a sneak peek of more advanced methods.
